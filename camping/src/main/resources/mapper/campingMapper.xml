@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.camping.DAO.campingListDAO">
+	<select id="campingList" resultType="com.camping.VO.campingVO">
+		select * from (select rownum
+		as num, a.* from(select * from camping order by wdate asc) a)
+		where
+		num between #{startNo}+1 and #{startNo} + #{perPageNum}
+	</select>
+	<!-- 카운트 -->
+	<select id="cpcnt" resultType="int"> <!-- 지절트타입은 정수여서 인트를 --><!-- 매겨변수 없고 리턴값 있다. -->
+		select count(*) from camping
+	</select>
+	<select id="selectOne" resultType="com.camping.VO.campingVO"> <!-- 자세히보기 -->
+		select * from camping where no=#{no}
+	</select>
+	<update id="updateCntplus">
+		update camping set cnt=cnt+1 where no=#{cpnum}
+	</update>
+
+	
+	<!-- 관라자페이지 캠핑장 삭제 -->
+	<delete id="campongdel">
+		delete from camping where no=#{cpno}
+	</delete>
+	<select id="cpmodList" resultType="com.camping.VO.campingVO">
+		select * from camping where
+		no=#{cp}
+	</select>
+	<update id="cpmod">
+		update camping set name=#{name},
+		pname=#{pname},city=#{city},addr=#{addr},mark=#{mark} where no=#{no}
+	</update>
+	<insert id="cpin">
+		insert into camping values (
+		camping_seq.nextval,
+		#{name},#{latitude},#{longitude},#{pname},#{city},#{addr},#{mark},default,0
+		)
+	</insert>
+
+
+	<!-- pname 리스트 -->
+	<select id="pnamelist" resultType="com.camping.VO.campingVO">
+		select distinct pname from camping order by pname asc
+	</select>
+	<select id="citylist" resultType="com.camping.VO.campingVO">
+		select distinct city from
+		(select city from camping where pname=#{pnamechoice}) camping order
+		by
+		city asc
+	</select>
+
+	<select id="SelectList" resultType="com.camping.VO.campingVO">
+		select city from (select *
+		from camping where pname=#{index}) camping
+	</select>
+	<!-- ======================================= -->
+	<select id="ctlist" resultType="com.camping.VO.campingVO">
+		select distinct city from camping order by city asc
+	</select>
+</mapper>

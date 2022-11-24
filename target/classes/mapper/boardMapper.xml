@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.camping.DAO.boardDAO">
+	<select id="boardList" resultType="com.camping.VO.boardVO">
+		select * from board order by no asc
+	</select>
+	<insert id="boardinsert"> <!-- 게시판입력 -->
+		insert into board values (
+		board_seq.nextval, #{id},
+		#{title}, #{memo},
+		#{urid}, 0, default)
+	</insert>
+	<select id="boardview" resultType="com.camping.VO.boardVO">
+		select * from board where
+		no=#{banum}
+	</select>
+	<update id="boardcnt">
+		update board set cnt=cnt+1 where no=#{banum}
+	</update>
+	<delete id="del">
+		delete from board where no=#{badel}
+	</delete>
+	<select id="bamodlist" resultType="com.camping.VO.boardVO">
+		select * from board where no=#{bamodnum} 
+	</select>
+	<update id="bamod">
+		update board set title=#{title},memo=#{memo} where no=#{no}
+	</update>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.camping.DAO.CommentDAO">
+	<insert id="insert">
+	insert into user_comment values (
+	user_comment_seq.nextval, #{id}, #{memo}, default, #{bno})
+	</insert>
+	
+	<select id="cmList" resultType="com.camping.VO.CommentVO" >
+		select * from user_comment where bno=#{bno}
+	</select>
+	<delete id="del">
+		delete from user_comment where no=#{no}
+	</delete>
+</mapper>

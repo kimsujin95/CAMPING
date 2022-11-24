@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.camping.DAO.UserDAO">
+	<insert id="insert">
+		insert into cpuser values (default, #{name}, #{id}, #{pwd}, default)
+	</insert>
+	<select id="usList" resultType="com.camping.VO.UserVO">
+		select * from cpuser
+	</select>
+	<select id="MyList" resultType="com.camping.VO.UserVO">
+		select * from cpuser where id=#{mylist}
+	</select>
+	<select id="usermodList" resultType="com.camping.VO.UserVO">
+		select * from cpuser where id = #{userid}
+	</select>
+	<delete id="userdel">
+		delete from cpuser where id=#{del}
+	</delete>
+	<update id="UserMod">
+		update cpuser set rating=#{rating},pwd= #{pwd} where id=#{id}
+	</update>
+	<!-- ===================관리자페이지================================ -->
+	<select id="adminusermodList" resultType="com.camping.VO.UserVO">
+		select * from cpuser where id = #{userid}
+	</select>
+	<update id="adminUserMod">
+		update cpuser set rating=#{rating},name=#{name},pwd= #{pwd} where id=#{id}
+	</update>
+</mapper>
